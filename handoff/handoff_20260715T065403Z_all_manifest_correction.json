@@ -1,0 +1,88 @@
+{
+  "schema_version": "manifest-correction-1.0",
+  "created_at_utc": "2026-07-16T23:50:28Z",
+  "applies_to": {
+    "run_id": "handoff_20260715T065403Z_all",
+    "archive": "handoff_20260715T065403Z_all_complete.zip",
+    "archive_sha256": "2dc63ff78a4283b9dffa9f5111ac243d1c781f0256a0b377f7a54441a2d5cb0d",
+    "legacy_manifest_sha256": "8ade63a43fe8827b8f59980f091d82c10f50ea3fa000ba732df9a894c0eeea14"
+  },
+  "integrity": {
+    "config_json_sha256": "569815954d5864a4661756c083233a396a792e986b56f5067a2a4c20ba524f79",
+    "v2_tuning_json_sha256": "7242c9931756bd859264460ba3a3bb232734aa562ea72ecdb744675eba029755",
+    "submission_csv_sha256": "822baa2688752d2594e8494219a678c26ca2e21df0941c297accac8cb32d2cb5"
+  },
+  "code_provenance": {
+    "notebook_sha256": null,
+    "status": "legacy_missing",
+    "reason": "The original training handoff did not record a notebook hash; it cannot be reconstructed reliably after the run."
+  },
+  "effective_config": {
+    "mode": "all",
+    "requested_iterations": null,
+    "save_feature_matrices": true,
+    "accelerator": {
+      "task_type": "GPU",
+      "devices": "0:1",
+      "gpu_count": 2,
+      "boosting_type": "Plain",
+      "border_count": 254,
+      "metric_period": 5
+    },
+    "model": {
+      "task_type": "GPU",
+      "devices": "0:1",
+      "gpu_ram_part": 0.85,
+      "expected_gpu_count": 2,
+      "boosting_type": "Plain",
+      "border_count": 254,
+      "metric_period": 5,
+      "seeds": [17, 41, 83],
+      "default_iterations": 1800,
+      "learning_rate": 0.035,
+      "depth": 8,
+      "l2_leaf_reg": 10.0,
+      "huber_delta": 1.5,
+      "early_stopping_rounds": 200,
+      "verbose_every": 100,
+      "upstream_decay_km": 75.0,
+      "snapshot_interval_seconds": 300,
+      "seasonal_bandwidth_days": 21.0,
+      "seasonal_recency_half_life_years": 1.5,
+      "seasonal_crossfit_folds": 5,
+      "quality_neighbor_gap_days": 45,
+      "blend_grid_size": 11
+    }
+  },
+  "effective_model": {
+    "architecture": "direct Huber anchor + seasonal residual Huber/RMSE blend",
+    "tuning_source": "current_validation",
+    "blend": {
+      "rmse_fraction_within_residual": 0.2,
+      "residual_fraction_in_final": 0.5,
+      "effective_component_weights": {
+        "anchor": 0.5,
+        "residual_huber": 0.4,
+        "residual_rmse": 0.1
+      }
+    },
+    "iterations": {
+      "anchor": 323,
+      "residual_huber": 737,
+      "residual_rmse": 657
+    },
+    "selection_rule": "joint anchor/residual/objective grid; mean fold quality RMSE + 0.1 * fold std; OOF only"
+  },
+  "verified_results": {
+    "pooled_raw_oof_rmse": 1.6002926798022654,
+    "pooled_quality_oof_rmse": 0.967299746070932,
+    "leaderboard_rmse": 1.60422,
+    "fold_blend_rmse": {
+      "sep_2023": 2.5756045205767513,
+      "may_2024": 0.7651484095553024,
+      "sep_2024": 1.2398222711693063,
+      "jan_2025": 1.1944028131999838
+    }
+  },
+  "correction_note": "This sidecar preserves the original ZIP unchanged and supersedes stale V2 weights, iterations, and metrics in earlier documentation."
+}
